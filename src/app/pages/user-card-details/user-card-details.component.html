@@ -1,0 +1,193 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card card-user">
+      <div class="card-body">
+        <form [formGroup]="cardDeatilsForm">
+          <div class="row">
+            <div class="col-md-6 pr-1">
+              <div>
+                <label>Company Logo</label>
+                <input (change)="onFileChange($event)" type="file" accept="image/png, image/jpeg, image/webp" class="form-control" formControlName="companyLogo">
+              </div>
+            </div>
+            <div class="col-md-6 pl-1">
+              <div class="form-group">
+                <label>Company Name *</label>
+                <input type="text" class="form-control" placeholder="Company Name" value="" formControlName="companyName" required>
+                <div *ngIf="cardDeatilsForm.controls.companyName.touched && cardDeatilsForm.controls.companyName.invalid" class="invalid">
+                  <div *ngIf="cardDeatilsForm.controls.companyName.errors.required">Company Name is required</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 pr-1">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Contact Number *</label>
+                <input type="number" class="form-control" placeholder="Enter Contact Number" formControlName="contactNumber">
+                <div *ngIf="cardDeatilsForm.controls.contactNumber.touched && cardDeatilsForm.controls.contactNumber.invalid" class="invalid">
+                  <div *ngIf="cardDeatilsForm.controls.contactNumber.errors.required">Contact Number is required</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 px-1">
+              <div class="form-group">
+                <label>Whatsapp Number</label>
+                <input type="number" class="form-control"  placeholder="Enter Whatsapp Number" value="" formControlName="whatsappNumber">
+                <div *ngIf="cardDeatilsForm.controls.whatsappNumber.touched && cardDeatilsForm.controls.whatsappNumber.invalid" class="invalid">
+                  <div *ngIf="cardDeatilsForm.controls.whatsappNumber.errors.min || cardDeatilsForm.controls.whatsappNumber.errors.max">Enter valid Number (10 digits)</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 pl-1">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Email *</label>
+                <input type="text" class="form-control" placeholder="youremail@domain.com" formControlName="email">
+                <div *ngIf="cardDeatilsForm.controls.email.touched && cardDeatilsForm.controls.email.invalid" class="invalid">
+                  <div *ngIf="cardDeatilsForm.controls.email.errors.required">Email is required</div>
+                </div>
+                <div *ngIf="cardDeatilsForm.controls.email.touched && cardDeatilsForm.controls.email.invalid" class="invalid">
+                  <div *ngIf="cardDeatilsForm.controls.email.errors.pattern">Enter valid Email</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 pr-1">
+              <div class="form-group">
+                <label>Website</label>
+                <input type="text" class="form-control" placeholder="www.xyz.com" value="" formControlName="website">
+              </div>
+            </div>
+            <div class="col-md-4 px-1">
+              <div class="form-group">
+                <label>Location</label>
+                <input type="text" class="form-control" placeholder="Location" value="" formControlName="location">
+              </div>
+            </div>
+            <div class="col-md-4 pl-1">
+              <div class="form-group">
+                <label>Appointment</label>
+                <input type="text" class="form-control" placeholder="Appointment" value="" formControlName="appointment">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 pr-1">
+              <div class="form-group">
+                <label>Testimony</label>
+                <input type="text" class="form-control" placeholder="Testimony" formControlName="testimony">
+              </div>
+            </div>
+            <div class="col-md-4 px-1">
+              <div class="form-group">
+                <label>Facebook Username</label>
+                <input type="text" class="form-control" placeholder="Facebook Username" value="" formControlName="facebook">
+              </div>
+            </div>
+            <div class="col-md-4 pl-1">
+              <div class="form-group">
+                <label>Instagram Username</label>
+                <input type="text" class="form-control" placeholder="Instagram Username" value="" formControlName="instagram">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 pr-1">
+              <div class="form-group">
+                <label>LinkedIn (URL)</label>
+                <input type="text" class="form-control" placeholder="LinkedIn Profile URL" value="" formControlName="linkedin">
+              </div>
+            </div>
+            <div class="col-md-6 pl-1">
+              <div class="form-group">
+                <label>Youtube (URL)</label>
+                <input type="text" class="form-control" placeholder="Youtube Channel/Video URL" value="" formControlName="youtube">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <p style="margin-left: 15px;">Payment Details</p>
+          </div>
+          <div class="row">
+            <div class="col-md-4 pr-1">
+              <div class="form-group">
+                <label>Beneficiary Name</label>
+                <input type="text" class="form-control" placeholder="Beneficiary Name" value="" formControlName="payMeName">
+              </div>
+            </div>
+            <div class="col-md-4 px-1">
+              <div class="form-group">
+                <label>Beneficiary A/C Number</label>
+                <input type="number" class="form-control" placeholder="Beneficiary A/C Number" value="" formControlName="payMeNumber">
+              </div>
+            </div>
+            <div class="col-md-4 pl-1">
+              <div class="form-group">
+                <label>IFSC Code</label>
+                <input type="text" class="form-control" placeholder="IFSC Code" value="" formControlName="payMeCode">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 px-1">
+              <div style="margin-left: 10px;" class="form-group">
+                <label>About Us Type</label><br>
+                <input style="margin-left: 10px;" type="radio" name="aboutUsType" id="aboutUsUrl" value="url" formControlName="aboutUsType">
+                <label style="margin-left: 10px;" for="aboutUsUrl">URL</label>
+                <input style="margin-left: 50px;" type="radio" name="aboutUsType" id="aboutUsText" value="text" formControlName="aboutUsType">
+                <label style="margin-left: 10px;" for="aboutUsText">Text</label>
+              </div>
+            </div>
+            <div *ngIf="cardDeatilsForm.controls.aboutUsType.value == 'url'" class="col-md-4 px-1">
+              <div class="form-group">
+                <label>About Us URL</label>
+                <input type="text" class="form-control" placeholder="About Us" value="" formControlName="aboutUs">
+              </div>
+            </div>
+            <div *ngIf="cardDeatilsForm.controls.aboutUsType.value == 'text'" class="col-md-4 px-1">
+              <div class="form-group">
+                <label>About Us Text</label>
+                <textarea class="form-control" placeholder="About Us" value="" formControlName="aboutUs"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 px-1">
+              <div style="margin-left: 10px;" class="form-group">
+                <label>Products Type</label><br>
+                <input style="margin-left: 10px;" type="radio" name="productsType" id="productsUrl" value="url" formControlName="productsType">
+                <label style="margin-left: 10px;" for="productsUrl">URL</label>
+                <input style="margin-left: 50px;" type="radio" name="productsType" id="productsText" value="text" formControlName="productsType">
+                <label style="margin-left: 10px;" for="productsText">Text</label>
+              </div>
+            </div>
+            <div *ngIf="cardDeatilsForm.controls.productsType.value == 'url'" class="col-md-4 px-1">
+              <div class="form-group">
+                <label>Products URL</label>
+                <input type="text" class="form-control" placeholder="Products URL" value="" formControlName="products">
+              </div>
+            </div>
+            <div *ngIf="cardDeatilsForm.controls.productsType.value == 'text'" class="col-md-4 px-1">
+              <div class="form-group">
+                <label>Products Text</label>
+                <textarea class="form-control" placeholder="Products Text" value="" formControlName="products"></textarea>
+              </div>
+            </div>
+            <div class="col-md-4 pl-1">
+              <div>
+                <label>Payment QR Code</label>
+                <input (change)="onQrCodeChange($event)" type="file" accept="image/png, image/jpeg, image/webp" class="form-control">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="update ml-auto mr-auto">
+              <button type="submit" (click)="cardDetailsFormSave()" [disabled]="cardDeatilsForm.invalid" class="btn btn-primary btn-round">Save</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

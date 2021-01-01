@@ -1,0 +1,191 @@
+<div class="row" style="display: flex; justify-content: space-evenly;">
+  <div class="col-md-4 col-sm-12">
+    <div class="card card-user">
+      <div class="card-body">
+        <form [formGroup]="usersaveform">
+          <div class="row">
+            <div class="col-md-12">
+              <label>Card Type</label>
+              <select disabled (change)="cardTypeChange($event)" style="margin-bottom: 20px;" class="form-control">
+                <option *ngIf="templateType == 'bcard'" value="bcard" selected>Business Card</option>
+                <option *ngIf="templateType == 'ecard'" value="ecard" selected>Employee Card</option>
+              </select>
+            </div>
+            <div class="row" style="margin: 10px 0 10px 20px; display: flex; align-items: center;">
+              <p style="margin-right: 10px;">Background Color</p>
+              <input type="color" formControlName="backgroundColor">
+            </div>
+            <div *ngIf="cardType == 'ecard'" class="col-md-12">
+              <label>Role</label>
+              <select (change)="userFormEdit()" (change)="roleChange($event)" style="margin-bottom: 20px;" class="form-control" formControlName="cardUserRole">
+                <option *ngIf="rolesEmpty" selected>No Roles Found</option>
+                <option *ngIf="!rolesEmpty" value="default" selected disabled hidden>Select a Role *</option>
+                <option *ngFor="let r of roles" [value]="r.cardUserRole">{{ r.cardUserRole }}</option>
+              </select>
+            </div>
+            <div *ngIf="cardType == 'ecard'" class="col-md-12">
+              <div style="margin-bottom: 20px;">
+                <label>Profile Image *</label>
+                <input (change)="userFormEdit()" required type="file" accept="image/png, image/jpeg, image/webp" (change)="onFileChange($event)" class="form-control" formControlName="profileImage">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>First Name *</label>
+                <input (keydown)="userFormEdit()" type="text" class="form-control" placeholder="First Name" value="" formControlName="firstName" required>
+                <div *ngIf="usersaveform.controls.firstName.touched && usersaveform.controls.firstName.invalid" class="invalid">
+                  <div *ngIf="usersaveform.controls.firstName.errors.required">First Name is required</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>Last Name *</label>
+                <input (keydown)="userFormEdit()" type="text" class="form-control" placeholder="Last Name" value="" formControlName="lastName">
+                <div *ngIf="usersaveform.controls.lastName.touched && usersaveform.controls.lastName.invalid" class="invalid">
+                  <div *ngIf="usersaveform.controls.lastName.errors.required">Last Name is required</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div *ngIf="cardType == 'ecard'" class="update ml-auto mr-auto">
+              <div ngbTooltip="Invalid Form">
+                <button class="invalid-button" type="submit" (click)="save()" *ngIf="usersaveform.invalid" [disabled]="usersaveform.invalid || usersaveform.controls.cardUserRole.value == 'default'" class="btn btn-primary btn-round">Save</button>
+              </div>
+              <button type="submit" (click)="save()" *ngIf="!usersaveform.invalid && usersaveform.controls.cardUserRole.value != 'default'" class="btn btn-primary btn-round">Save</button>
+            </div>
+            <div *ngIf="cardType == 'bcard'" class="update ml-auto mr-auto">
+              <button type="submit" (click)="userPdfSave()" class="btn btn-primary btn-round">Save</button>
+            </div>
+            <div *ngIf="lockTemplate == 0" class="update ml-auto mr-auto">
+              <button type="submit" (click)="changeTemplate()" class="btn btn-primary btn-round">Change Template</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-main">
+    <div class="card card-user" id="user" [style.background]="usersaveform.controls.backgroundColor.value">
+      <div class="card-body" style="min-height: 145px;">
+        <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+          <div style="margin-top: 10px;">
+            <img class="border-gray" [src]="companyLogoBase64" *ngIf="companyLogoBase64" height="100px">
+          </div>
+          <div style="margin-top: 10px; margin-bottom: 15px;">
+            <h6 *ngIf="companyName">{{ companyName }}</h6>
+            <h6 *ngIf="!companyName">Company Name</h6>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-evenly;">
+          <div *ngIf="cardType == 'ecard'">
+            <img class="avatar border-gray" [src]="imageSrc" *ngIf="imageSrc">
+            <img class="avatar border-gray" src="../../../assets/images/default-avatar.png" *ngIf="!imageSrc">
+          </div>
+          <div>
+            <h5 *ngIf="usersaveform.controls.firstName.value || usersaveform.controls.lastName.value" class="title">{{ usersaveform.controls.firstName.value }} {{ usersaveform.controls.lastName.value }}</h5>
+            <h5 *ngIf="!usersaveform.controls.firstName.value && !usersaveform.controls.lastName.value"  class="title">Your Name</h5>
+            <p *ngIf="usersaveform.controls.cardUserRole.value != 'default' && cardType == 'ecard'" style="margin-top: -15px;">{{ usersaveform.controls.cardUserRole.value }}</p>
+            <p *ngIf="usersaveform.controls.cardUserRole.value == 'default' && cardType == 'ecard'" style="margin-top: -15px;">Role</p>
+          </div>
+        </div>
+      </div>
+      <div id="card-footer" class="card-footer">
+        <hr>
+        <div id="button-container" class="button-container">
+          <div id="row" class="row" style="margin: 0 auto; display: flex; justify-content: center;">
+            <div *ngIf="(selectedRoleValue?.contactNumber == 'yes' && cardType == 'ecard') || (cardType == 'bcard' && cardDetails.contactNumber) || (cardType == 'bcard' && cardDetails.contactNumber)" id="call" class="col-4 card-icon">
+              <h5><img class="img-icon" src="../../../assets/images/call-black-18dp.svg"/>
+                <br>
+                <small>Call</small>
+              </h5>
+            </div>
+            <div *ngIf="(selectedRoleValue?.whatsappNumber == 'yes' && cardType == 'ecard') || (cardType == 'bcard' && cardDetails.whatsappNumber)" id="whatsapp" class="col-4 card-icon">
+              <h5><img class="img-icon" src="../../../assets/images/whatsapp1.png"/>
+                <br>
+                <small>Whatsapp</small>
+              </h5>
+            </div>
+            <div *ngIf="(selectedRoleValue?.email == 'yes' && cardType == 'ecard') || (cardType == 'bcard' && cardDetails.email)" id="email" class="col-4 card-icon">
+              <h5><img class="img-icon" src="../../../assets/images/email.png"/>
+                <br>
+                <small>Email</small>
+              </h5>
+            </div>
+            <div *ngIf="(selectedRoleValue?.website == 'yes' && cardType == 'ecard') || (cardType == 'bcard' && cardDetails.website)" id="website" class="col-4 card-icon">
+              <h5><img class="img-icon" src="../../../assets/images/website.png"/>
+                <br>
+                <small>Website</small>
+              </h5>
+            </div>
+            <div *ngIf="(selectedRoleValue?.aboutUs == 'yes' && cardType == 'ecard') || (cardType == 'bcard' && cardDetails.aboutUs)" id="aboutus" class="col-4 card-icon">
+              <h5><img class="img-icon" src="../../../assets/images/about us.png"/>
+                <br>
+                <small>About Us</small>
+              </h5>
+            </div>
+            <div *ngIf="(selectedRoleValue?.products == 'yes' && cardType == 'ecard') || (cardType == 'bcard' && cardDetails.products)" id="products" class="col-4 card-icon">
+              <h5><img class="img-icon" src="../../../assets/images/products.png"/>
+                <br>
+                <small>Products</small>
+              </h5>
+            </div>
+            <div *ngIf="(selectedRoleValue?.location == 'yes' && cardType == 'ecard') || (cardType == 'bcard' && cardDetails.location)" id="location" class="col-4 card-icon">
+              <h5><img class="img-icon" src="../../../assets/images/location.webp"/>
+                <br>
+                <small>Location</small>
+              </h5>
+            </div>
+            <div *ngIf="(selectedRoleValue?.appointment == 'yes' && cardType == 'ecard') || (cardType == 'bcard' && cardDetails.appointment)" id="appointment" class="col-4 card-icon">
+              <h5><img class="img-icon" src="../../../assets/images/appointment.png"/>
+                <br>
+                <small>Appointment</small>
+              </h5>
+            </div>
+            <div *ngIf="(selectedRoleValue?.testimony == 'yes' && cardType == 'ecard') || (cardType == 'bcard' && cardDetails.testimony)" id="testimony" class="col-4 card-icon">
+              <h5><img class="img-icon" src="../../../assets/images/testimony.png"/>
+                <br>
+                <small>Testimony</small>
+              </h5>
+            </div>
+            <div *ngIf="(selectedRoleValue?.payMe == 'yes' && cardType == 'ecard') || (cardType == 'bcard' && cardDetails.payMeName && cardDetails.payMeNumber && cardDetails.payMeCode)" id="payme" class="col-4 card-icon">
+              <h5><img class="img-icon" src="../../../assets/images/pay me.png"/>
+                <br>
+                <small>Pay Me</small>
+              </h5>
+            </div>
+            <div *ngIf="((selectedRoleValue?.linkedin || selectedRoleValue?.facebook || selectedRoleValue?.instagram || selectedRoleValue?.youtube) && cardType == 'ecard') || ((cardType == 'bcard') && (cardDetails.linkedin || cardDetails.facebook || cardDetails.instagram || cardDetails.youtube))" class="col-12" style="margin-top: 15px;">
+              <h5 class=" title">Follow Me</h5>
+            </div>
+            <div *ngIf="(selectedRoleValue?.linkedin == 'yes' && cardType == 'ecard') || (cardType == 'bcard' && cardDetails.linkedin)" id="linkedin" class="col-4 card-icon">
+              <h5><img class="img-icon" src="../../../assets/images/linkedin.png"/>
+                <br>
+                <small>LinkedIn</small>
+              </h5>
+            </div>
+            <div *ngIf="(selectedRoleValue?.facebook == 'yes' && cardType == 'ecard') || (cardType == 'bcard' && cardDetails.facebook)" id="facebook" class="col-4 card-icon">
+              <h5><img class="img-icon" src="../../../assets/images/facebook.png"/>
+                <br>
+                <small>Facebook</small>
+              </h5>
+            </div>
+            <div *ngIf="(selectedRoleValue?.instagram == 'yes' && cardType == 'ecard') || (cardType == 'bcard' && cardDetails.instagram)" id="instagram" class="col-4 card-icon">
+              <h5><img class="img-icon" src="../../../assets/images/instagram.webp"/>
+                <br>
+                <small>Instagram</small>
+              </h5>
+            </div>
+            <div *ngIf="(selectedRoleValue?.youtube == 'yes' && cardType == 'ecard') || (cardType == 'bcard' && cardDetails.youtube)" id="youtube" class="col-4 card-icon">
+              <h5><img class="img-icon" src="../../../assets/images/youtube.png"/>
+                <br>
+                <small>Youtube</small>
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

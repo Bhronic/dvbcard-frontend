@@ -1,0 +1,54 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Users List</h4>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table">
+            <thead class=" text-primary">
+              <tr>
+                <th>#</th>
+                <th>Company Name</th>
+                <!-- <th>Type</th> -->
+                <th>Mobile Number</th>
+                <th>Email</th>
+                <th>Default Template</th>
+                <th class="check-box">Business Card</th>  
+                <th class="check-box">Employee Card</th>
+                <th class="check-box">Card Limit</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="users">
+              <tr *ngFor="let u of users; let i = index">
+                <td>{{ i+1 }}</td>
+                <td>{{ u.name }}</td>
+                <!-- <td>{{ u.usertype.userType }}</td> -->
+                <td>{{ u.mobile }}</td>
+                <td>{{ u.email }}</td>
+                <td>{{ u.defaultTemplate }}</td>
+                <td class="check-box"><input [(ngModel)]="u.activeBusinessCard" (click)="setBusinessCard(u.id)"   type="checkbox"></td>
+                <td class="check-box"><input [(ngModel)]="u.activeEmployeeCard"  (click)="setEmployeeCard(u.id)" type="checkbox"></td>
+                <td><input  type="text"  [(ngModel)]="u.cardLimit"  (input)="onChangedcardLimit($event.target.value,u.id)"  class="form-control card-limit"></td>
+               <td><i (click)="deleteUserById(u.id)" class="nc-icon nc-basket" style="color: red; cursor: pointer; font-size: 18px;"></i></td>
+            
+                <!-- <td *ngIf="u.roles[0].name != 'ROLE_ADMIN'"><i (click)="deleteUserById(u.id)" class="nc-icon nc-basket" style="color: red; cursor: pointer; font-size: 18px;"></i></td>
+                <td *ngIf="u.roles[0].name == 'ROLE_ADMIN'">Admin</td> -->
+              </tr>
+            </tbody>
+            <tr *ngIf="!users">
+              <td colspan="6"><h5 style="text-align: center; margin: 100px 0 80px 0;">No records to display</h5></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="overlay" *ngIf="loading">
+  <div class="spinner">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>

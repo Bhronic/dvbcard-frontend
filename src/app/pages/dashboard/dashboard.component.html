@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Pdf Users List</h4>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table">
+            <thead class=" text-primary">
+              <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Role</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="usersPdf">
+              <tr *ngIf="bcard">
+                <td></td>
+                <td colspan="4">Business Card</td>
+                <td (click)="viewUserPdfById(bcard.id, 'bcard')" style="color: #147efb; cursor: pointer;">View</td>
+              </tr>
+              <tr *ngFor="let u of usersPdf; let i = index">
+                <td *ngIf="u.cardType == 'ecard'">{{ i+1 }}</td>
+                <td *ngIf="u.cardType == 'ecard'">{{ u.firstName }}</td>
+                <td *ngIf="u.cardType == 'ecard'">{{ u.lastName }}</td>
+                <td *ngIf="u.cardType == 'ecard'">{{ u.cardUserRole }}</td>
+                <td *ngIf="u.cardType == 'ecard'"><i (click)="deleteUserPdfById(u.id)" class="nc-icon nc-basket" style="color: red; cursor: pointer; font-size: 18px;"></i></td>
+                <td *ngIf="u.cardType == 'ecard'" (click)="viewUserPdfById(u.id, 'ecard')" style="color: #147efb; cursor: pointer;">View</td>
+              </tr>
+            </tbody>
+            <tr *ngIf="usersPdf?.length == 0">
+              <td colspan="6"><h5 style="text-align: center; margin: 100px 0 80px 0;">No records to display</h5></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="overlay" *ngIf="loading">
+  <div class="spinner">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>

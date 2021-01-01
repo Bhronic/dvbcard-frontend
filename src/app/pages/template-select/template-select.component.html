@@ -1,0 +1,31 @@
+<div class="main">
+  <div class="card-body">
+    <div>
+      <h2 class="title" style="text-align: center; color: #51cbce;">Choose your default Template</h2>
+      <nav>
+        <div class="nav nav-tabs nav-fill">
+          <a (click)="changeTab('bcard')" [class.active]="selectedTab == 'bcard'" class="nav-item nav-link" style="cursor: pointer;"><h6>Business Card</h6></a>
+          <a *ngIf = "enableEmployeeTab == 'true'" (click)="changeTab('ecard')" [class.active]="selectedTab == 'ecard'" class="nav-item nav-link" style="cursor: pointer;"><h6>Employee Card</h6></a>
+        </div>
+      </nav>
+    </div>
+    <div style="margin-top: 20px;">
+      <div class="row" style="height: 100%; display: flex; align-items: center; flex-wrap: nowrap; overflow-x: auto;">
+        <div *ngFor="let t of templates; let i = index" class="col-md-3">
+          <div (click)="selectTemplate(t.photo)" [class.selected]="(defaultTemplate == t.photo && selectedTab == 'ecard') || (defaultTemplateb == t.photo && selectedTab == 'bcard')" class="card card-user template">
+            <div class="card-body" style="display: flex; align-items: center; flex-direction: column;">
+              <h5 class="title" style="text-align: center;">{{ t.name }}</h5>
+              <img *ngIf="selectedTab == 'ecard'" [src]="'../../../assets/images/templates/employee/'+t.photo+'.png'" style="border: 1px solid #ddd;" height="400px">
+              <img *ngIf="selectedTab == 'bcard'" [src]="'../../../assets/images/templates/business/'+t.photo+'.png'" style="border: 1px solid #ddd;" height="400px">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="update ml-auto mr-auto" style="text-align: center;">
+          <button (click)="save()" [disabled]="!defaultTemplate && !defaultTemplateb" class="btn btn-primary btn-round">Lock</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

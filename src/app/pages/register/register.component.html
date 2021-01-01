@@ -1,0 +1,98 @@
+<div class="row background" style="width: 100%; height: 100vh;">
+  <div class="col-md-7 col-sm-0">
+  </div>
+  <div class="col-md-5 col-sm-12" style="height: 100%; display: table;">
+    <div class="card-main" style="width: 100%; display: table-cell; vertical-align: middle;">
+      <div class="card card-user">
+        <div class="card-body" style="margin: 15px 0;">
+          <form [formGroup]="registerForm">
+            <div style="text-align: center; margin-bottom: 10px;">
+              <img src="../../../assets/images/logo.jpg" width="150px">
+            </div>
+            <div>
+              <h3 class="title" style="text-align: center;">Register</h3>
+            </div>
+            <div class="row" style="display: flex; justify-content: center;">
+              <div class="col-md-6 pr-1">
+                <div class="form-group">
+                  <label>Mobile Number *</label>
+                  <input type="number" class="form-control" placeholder="Enter Mobile Number" formControlName="mobile" required>
+                  <div *ngIf="registerForm.controls.mobile.touched && registerForm.controls.mobile.invalid" class="invalid">
+                    <div *ngIf="registerForm.controls.mobile.errors.required">Mobile Number is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 pl-1">
+                <div class="form-group">
+                  <label>Email *</label>
+                  <input type="email" class="form-control" placeholder="Enter Email" formControlName="email" required>
+                  <div *ngIf="registerForm.controls.email.touched && registerForm.controls.email.invalid" class="invalid">
+                    <div *ngIf="registerForm.controls.email.errors.required">Email is required</div>
+                  </div>
+                  <div *ngIf="registerForm.controls.email.touched && registerForm.controls.email.invalid" class="invalid">
+                    <div *ngIf="registerForm.controls.email.errors.pattern">Email is not Valid</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row" style="display: flex; justify-content: center;">
+              <div class="col-md-6 pr-1">
+                <div class="form-group">
+                  <label>Password *</label>
+                  <input (input)="passwordChange()" type="password" class="form-control" placeholder="Enter Password" formControlName="password" required>
+                  <div *ngIf="registerForm.controls.password.touched && registerForm.controls.password.invalid" class="invalid">
+                    <div *ngIf="registerForm.controls.password.errors.required">Password is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 pl-1">
+                <div class="form-group">
+                  <label>Confirm Password *</label>
+                  <input (input)="passwordChange()" type="password" class="form-control" placeholder="Enter Password Again" formControlName="confirmPassword" required>
+                  <div *ngIf="registerForm.controls.confirmPassword.touched && registerForm.controls.confirmPassword.invalid" class="invalid">
+                    <div *ngIf="registerForm.controls.confirmPassword.errors.required">Confirm Password is required</div>
+                  </div>
+                  <label style="color: red; font-size: 14px; margin-left: 10px;" *ngIf="!passwordMatch">
+                    Password didn't match. Try again.
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 pr-1">
+                <div class="form-group">
+                  <label>Name of Organisation *</label>
+                  <input (input)="passwordChange()" type="text" class="form-control" placeholder="Enter Name" formControlName="name" required>
+                  <div *ngIf="registerForm.controls.name.touched && registerForm.controls.name.invalid" class="invalid">
+                    <div *ngIf="registerForm.controls.name.errors.required">Password is required</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 pl-1">
+                <div class="form-group">
+                  <label>Type of Organisation *</label>
+                  <select class="form-control" formControlName="usertype" required>
+                    <option *ngIf="!isSubmitted" selected disabled hidden>Select Type</option>
+                    <option value="Doctor">Doctor</option>
+                    <option value="Engineer">Engineer</option>
+                  </select>
+                  <div class="invalid">
+                    <div *ngIf="isSubmitted && registerForm.controls.usertype.errors?.required">Type is required</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="update ml-auto mr-auto">
+                <button (click)="register()" type="submit" [disabled]="registerForm.invalid" class="btn btn-primary btn-round">Register</button>
+              </div>
+            </div>
+            <div style="text-align: center; margin-top: 10px;">
+              <p>Already have an account? <a (click)="goToLogin()" style="color: #51cbce; cursor: pointer;">Login</a></p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+/* You can add global styles to this file, and also import other style files */
+.mat-menu-panel {
+    min-width: 456px !important;;
+    max-width: 456px !important;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    max-height: calc(100vh - 48px);
+    border-radius: 4px;
+    outline: 0;
+    min-height: 64px;
+  }
+  

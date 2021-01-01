@@ -1,0 +1,212 @@
+<div class="main">
+  <div class="card-main" style="overflow-y: auto; margin-top: 20px;">
+    <div class="card card-user" id="user" [style.background]="'linear-gradient('+userPdf?.backgroundColor+','+userPdf?.backgroundColor2+')'">
+      <div class="card-body" style="min-height: 145px;">
+        <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+          <div style="margin-top: 10px;">
+            <img class="border-gray" [src]="companyLogoBase64" *ngIf="cardDetails?.companyLogo" height="100px">
+          </div>
+          <div style="margin-top: 10px; margin-bottom: 15px;">
+            <h6 *ngIf="cardDetails?.companyName">{{ cardDetails?.companyName }}</h6>
+            <h6 *ngIf="!cardDetails?.companyName">Company Name</h6>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-evenly;">
+          <div *ngIf="cardType == 'ecard'">
+            <img class="avatar border-gray" [src]="profileImageBase64" *ngIf="profileImageBase64">
+            <img class="avatar border-gray" src="../../../assets/images/default-avatar.png" *ngIf="!profileImageBase64">
+          </div>
+          <div>
+            <h5 *ngIf="userPdf?.firstName || userPdf?.lastName" class="title">{{ userPdf?.firstName }} {{ userPdf?.lastName }}</h5>
+            <h5 *ngIf="!userPdf?.firstName && !userPdf?.lastName"  class="title">Your Name</h5>
+            <p *ngIf="userRole?.cardUserRole != 'default' && cardType == 'ecard'" style="margin-top: -15px;">{{ userRole?.cardUserRole }}</p>
+            <p *ngIf="userRole?.cardUserRole == 'default' && cardType == 'ecard'" style="margin-top: -15px;">Role</p>
+          </div>
+        </div>
+      </div>
+      <div id="card-footer" class="card-footer">
+        <hr>
+        <div id="button-container" class="button-container">
+          <div id="row" class="row" style="margin: 0 auto; display: flex; justify-content: center;">
+            <div *ngIf="(userRole?.contactNumber == 'yes' && cardType == 'ecard') || (cardType == 'bcard' && cardDetails?.contactNumber)" id="call" class="col-4 card-icon">
+              <h5 class="hover">
+                <a [href]="'tel:91'+cardDetails?.contactNumber">
+                  <img class="img-icon" src="../../../assets/images/call-black-18dp.svg"/>
+                  <br>
+                  <small>Call</small>
+                </a>
+              </h5>
+            </div>
+            <div *ngIf="(userRole?.whatsappNumber == 'yes' && cardType == 'ecard') || (cardType == 'bcard' && cardDetails?.whatsappNumber)" id="whatsapp" class="col-4 card-icon">
+              <h5 class="hover">
+                <a [href]="'https://wa.me/91'+cardDetails?.whatsappNumber+'?text=Got%20reference%20from%20your%20Business%20Card'" target="_blank">
+                  <img class="img-icon" src="../../../assets/images/whatsapp1.png"/>
+                  <br>
+                  <small>Whatsapp</small>
+                </a>
+              </h5>
+            </div>
+            <div *ngIf="(userRole?.email == 'yes' && cardType == 'ecard') || (cardType == 'bcard' && cardDetails?.email)" id="email" class="col-4 card-icon">
+              <h5 class="hover">
+                <a [href]="'mailto:'+cardDetails?.email" target="_blank">
+                  <img class="img-icon" src="../../../assets/images/email.png"/>
+                  <br>
+                  <small>Email</small>
+                </a>
+              </h5>
+            </div>
+            <div *ngIf="(userRole?.website == 'yes' && cardType == 'ecard') || (cardType == 'bcard' && cardDetails?.website)" id="website" class="col-4 card-icon">
+              <h5 class="hover">
+                <a [href]="cardDetails?.website" target="_blank">
+                  <img class="img-icon" src="../../../assets/images/website.png"/>
+                  <br>
+                  <small>Website</small>
+                </a>
+              </h5>
+            </div>
+            <div *ngIf="(userRole?.aboutUs == 'yes' && cardType == 'ecard') || (cardType == 'bcard' && cardDetails?.aboutUs)" id="aboutus" class="col-4 card-icon">
+              <h5 *ngIf="cardDetails?.aboutUsType == 'text'" class="hover" [matMenuTriggerFor]="aboutUs">
+                <img class="img-icon" src="../../../assets/images/about us.png"/>
+                <br>
+                <small>About Us</small>
+              </h5>
+              <h5 *ngIf="cardDetails?.aboutUsType == 'url'" class="hover">
+                <a [href]="cardDetails?.aboutUs" target="_blank">
+                  <img class="img-icon" src="../../../assets/images/about us.png"/>
+                  <br>
+                  <small>About Us</small>
+                </a>
+              </h5>
+              <mat-menu #aboutUs="matMenu">
+                <div style="padding: 15px; background-color: #cae4db;">
+                  <h6>About Us</h6>
+                  <p>{{ cardDetails?.aboutUs }}</p>
+                </div>
+              </mat-menu>
+            </div>
+            <div *ngIf="(userRole?.products == 'yes' && cardType == 'ecard') || (cardType == 'bcard' && cardDetails?.products)" id="products" class="col-4 card-icon">
+              <h5 *ngIf="cardDetails?.productsType == 'text'" class="hover" [matMenuTriggerFor]="products">
+                <img class="img-icon" src="../../../assets/images/products.png"/>
+                <br>
+                <small>Products</small>
+              </h5>
+              <h5 *ngIf="cardDetails?.productsType == 'url'" class="hover">
+                <a [href]="cardDetails?.products" target="_blank">
+                  <img class="img-icon" src="../../../assets/images/products.png"/>
+                  <br>
+                  <small>Products</small>
+                </a>
+              </h5>
+              <mat-menu #products="matMenu">
+                <div style="padding: 15px; background-color: #cae4db;">
+                  <h6>Products</h6>
+                  <p>{{ cardDetails?.products }}</p>
+                </div>
+              </mat-menu>
+            </div>
+            <div *ngIf="(userRole?.location == 'yes' && cardType == 'ecard') || (cardType == 'bcard' && cardDetails?.location)" id="location" class="col-4 card-icon">
+              <h5 class="hover"><img class="img-icon" src="../../../assets/images/location.webp"/>
+                <br>
+                <small>Location</small>
+              </h5>
+            </div>
+            <div *ngIf="(userRole?.appointment == 'yes' && cardType == 'ecard') || (cardType == 'bcard' && cardDetails?.appointment)" id="appointment" class="col-4 card-icon">
+              <h5 class="hover">
+                <a [href]="cardDetails?.appointment" target="_blank">
+                  <img class="img-icon" src="../../../assets/images/appointment.png"/>
+                  <br>
+                  <small>Appointment</small>
+                </a>
+              </h5>
+            </div>
+            <div *ngIf="(userRole?.testimony == 'yes' && cardType == 'ecard') || (cardType == 'bcard' && cardDetails?.testimony)" id="testimony" class="col-4 card-icon">
+              <h5 class="hover" [matMenuTriggerFor]="testimony"><img class="img-icon" src="../../../assets/images/testimony.png"/>
+                <br>
+                <small>Testimony</small>
+              </h5>
+              <mat-menu #testimony="matMenu">
+                <div style="padding: 15px; background-color: #cae4db;">
+                  <h6>Testimony</h6>
+                  <p>{{ cardDetails?.testimony }}</p>
+                </div>
+              </mat-menu>
+            </div>
+            <div *ngIf="(userRole?.payMe == 'yes' && cardType == 'ecard') || ((cardType == 'bcard') && (cardDetails?.payMeName && cardDetails?.payMeNumber && cardDetails?.payMeCode))" id="payme" class="col-4 card-icon">
+              <h5 class="hover" [matMenuTriggerFor]="payMe"><img class="img-icon" src="../../../assets/images/pay me.png"/>
+                <br>
+                <small>Pay Me</small>
+              </h5>
+              <mat-menu #payMe="matMenu">
+                <div style="padding: 15px; background-color: #cae4db;">
+                  <h6>Payment Details</h6>
+                  <p>Beneficiary Name: {{ cardDetails?.payMeName }}</p>
+                  <p>Account Number: {{ cardDetails?.payMeNumber }}</p>
+                  <p>IFSC Code: {{ cardDetails?.payMeCode }}</p>
+                  <p *ngIf="cardDetails?.qrCode">QR Code
+                    <img [src]="cardDetails?.qrCode" height="100px">
+                  </p>
+                </div>
+              </mat-menu>
+            </div>
+            <div *ngIf="((userRole?.linkedin == 'yes' || userRole?.facebook == 'yes' || userRole?.instagram == 'yes' || userRole?.youtube == 'yes') && cardType == 'ecard') || ((cardType == 'bcard') && (cardDetails?.facebook || cardDetails?.linkedin || cardDetails?.instagram || cardDetails?.youtube))" class="col-12" style="margin-top: 15px;">
+              <h5 class=" title">Follow Me</h5>
+            </div>
+            <div *ngIf="(userRole?.linkedin == 'yes' && cardType == 'ecard') || (cardType == 'bcard' && cardDetails?.linkedin)" id="linkedin" class="col-4 card-icon">
+              <h5 class="hover">
+                <a [href]="cardDetails?.linkedin" target="_blank">
+                  <img class="img-icon" src="../../../assets/images/linkedin.png"/>
+                  <br>
+                  <small>LinkedIn</small>
+                </a>
+              </h5>
+            </div>
+            <div *ngIf="(userRole?.facebook == 'yes' && cardType == 'ecard') || (cardType == 'bcard' && cardDetails?.facebook)" id="facebook" class="col-4 card-icon">
+              <h5 class="hover">
+                <a [href]="'https://m.facebook.com/'+cardDetails?.facebook" target="_blank">
+                  <img class="img-icon" src="../../../assets/images/facebook.png"/>
+                  <br>
+                  <small>Facebook</small>
+                </a>
+              </h5>
+            </div>
+            <div *ngIf="(userRole?.instagram == 'yes' && cardType == 'ecard') || (cardType == 'bcard' && cardDetails?.instagram)" id="instagram" class="col-4 card-icon">
+              <h5 class="hover">
+                <a [href]="'https://www.instagram.com/'+cardDetails?.instagram" target="_blank">
+                  <img class="img-icon" src="../../../assets/images/instagram.webp"/>
+                  <br>
+                  <small>Instagram</small>
+                </a>
+              </h5>
+            </div>
+            <div *ngIf="(userRole?.youtube == 'yes' && cardType == 'ecard') || (cardType == 'bcard' && cardDetails?.youtube)" id="youtube" class="col-4 card-icon">
+              <h5 class="hover">
+                <a [href]="cardDetails?.youtube" target="_blank">
+                  <img class="img-icon" src="../../../assets/images/youtube.png"/>
+                  <br>
+                  <small>Youtube</small>
+                </a>
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="share">
+      <button class="btn btn-primary btn-round" [matMenuTriggerFor]="menu">Share<i class="nc-icon nc-spaceship" style="margin-left: 5px; font-size: 15px;"></i></button>
+      <mat-menu #menu="matMenu">
+        <share-button [theme]="'circles-dark'" [button]="'facebook'" [size]="3" [autoSetMeta]="false"></share-button>
+        <share-button [theme]="'circles-dark'" [button]="'twitter'" [size]="3" [autoSetMeta]="false"></share-button>
+        <share-button [theme]="'circles-dark'" [button]="'linkedin'" [size]="3" [autoSetMeta]="false"></share-button>
+        <share-button [theme]="'circles-dark'" [button]="'whatsapp'" [size]="3" [autoSetMeta]="false"></share-button>
+        <share-button [theme]="'circles-dark'" [button]="'sms'" [size]="3" [autoSetMeta]="false"></share-button>
+        <share-button [theme]="'circles-dark'" [button]="'email'" [size]="3" [autoSetMeta]="false"></share-button>
+        <share-button [theme]="'circles-dark'" [button]="'copy'" [size]="3" [autoSetMeta]="false"></share-button>
+      </mat-menu>
+    </div>
+    <div style="margin-left: 50px;">
+      <button type="submit" (click)="download()" class="btn btn-primary btn-round">PDF</button>
+    </div>
+  </div>
+</div>

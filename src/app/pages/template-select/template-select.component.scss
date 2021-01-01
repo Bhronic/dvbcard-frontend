@@ -1,0 +1,40 @@
+.main{
+  background: linear-gradient(135deg,#fafafa 22px,rgba(0,0,0,.04) 0,rgba(0,0,0,.04) 24px,transparent 0,transparent 67px,rgba(0,0,0,.04) 0,rgba(0,0,0,.04) 69px,transparent 0),linear-gradient(225deg,#fafafa 22px,rgba(0,0,0,.04) 0,rgba(0,0,0,.04) 24px,transparent 0,transparent 67px,rgba(0,0,0,.04) 0,rgba(0,0,0,.04) 69px,transparent 0) 0 64px;
+  background-color: #fafafa;
+  background-size: 64px 128px;
+  height: 100vh;
+}
+
+.template{
+  border: 1px solid #ddd;
+  cursor: pointer;
+  transition: transform .2s;
+}
+
+.template:hover {
+  transform: scale(1.1);
+}
+
+.col-md-3{
+  display: inline-block;
+  float: none;
+}
+
+.selected{
+  border: 2px solid #4BB543;
+  background-color: #c6ebc9;
+}
+
+body::-webkit-scrollbar {
+  width: 12px;               /* width of the entire scrollbar */
+}
+
+body::-webkit-scrollbar-track {
+  background: orange;        /* color of the tracking area */
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: blue;    /* color of the scroll thumb */
+  border-radius: 20px;       /* roundness of the scroll thumb */
+  border: 3px solid orange;  /* creates padding around scroll thumb */
+}

@@ -1,0 +1,135 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card card-user">
+      <div class="card-body">
+        <form>
+
+          <div class="row header">
+            <div class="col-md-5 col-sm-6">
+              <select *ngIf="!addRole" (change)="roleChange($event)" [formControl]="roleSelectBox" class="form-control" style="cursor: pointer;">
+                <option *ngIf="rolesEmpty" selected>No Roles Found</option>
+                <option *ngIf="!rolesEmpty" value="default" selected disabled hidden>Select a Role *</option>
+                <option *ngFor="let r of roles" [value]="r.cardUserRole">{{ r.cardUserRole }}</option>
+              </select>
+              <input *ngIf="addRole" [(ngModel)]="selectedRoleValue.cardUserRole" name="cardUserRole" type="text" class="form-control" placeholder="Enter Role Name">
+            </div>
+            <div class="col-md-6 col-sm-6">
+              <button (click)="changeAddRole(true)" *ngIf="!addRole" class="btn btn-primary"><i class="nc-icon nc-simple-add" style="margin-right: 5px; font-weight: bolder; color: #fff;"></i>Add Role</button>
+            </div>
+          </div>
+
+          <div *ngIf="(selectedRole && !rolesEmpty) || addRole">
+            <h5 class="title"></h5>
+            <div class="row">
+              <div class="col-md-4">
+                <input type="checkbox" name="companyName" id="companyName" value="yes" checked disabled>
+                <label class="roleLabel" for="companyName">Company Name</label><br>
+              </div>
+              <div class="col-md-4">
+                <input type="checkbox" name="companyLogo" id="companyLogo" checked disabled>
+                <label class="roleLabel" for="companyLogo">Company Logo</label><br>
+              </div>
+            </div>
+            <div class="row form">
+              <div class="col-md-4">
+                <input type="checkbox" name="firstName" id="firstName" value="yes" checked disabled>
+                <label class="roleLabel" for="firstName">First Name</label><br>
+              </div>
+              <div class="col-md-4">
+                <input type="checkbox" name="lastName" id="lastName" value="yes" checked disabled>
+                <label class="roleLabel" for="lastName">Last Name</label><br>
+              </div>
+              <div class="col-md-4">
+                <input type="checkbox" name="cardUserRole" id="cardUserRole" value="yes" checked disabled>
+                <label class="roleLabel" for="cardUserRole">Role</label><br>
+              </div>
+            </div>
+            <div class="row form">
+              <div class="col-md-4">
+                <input (click)="contactNumberChange()" type="checkbox" name="contactNumber" id="contactNumber" value="yes" [checked]="selectedRoleValue.contactNumber == 'yes'">
+                <label class="roleLabel" for="contactNumber">Contact Number</label><br>
+              </div>
+              <div class="col-md-4">
+                <input (click)="whatsappNumberChange()" type="checkbox" name="whatsappNumber" id="whatsappNumber" value="yes" [checked]="selectedRoleValue.whatsappNumber == 'yes'">
+                <label class="roleLabel" for="whatsappNumber">Whatsapp Number</label><br>
+              </div>
+              <div class="col-md-4">
+                <input (click)="emailChange()" type="checkbox" name="email" id="email" value="yes" [checked]="selectedRoleValue.email == 'yes'">
+                <label class="roleLabel" for="email">Email</label><br>
+              </div>
+            </div>
+            <div class="row form">
+              <div class="col-md-4">
+                <input (click)="websiteChange()" type="checkbox" name="website" id="website" value="yes" [checked]="selectedRoleValue.website == 'yes'">
+                <label class="roleLabel" for="website">Website</label><br>
+              </div>
+              <div class="col-md-4">
+                <input (click)="aboutUsChange()" type="checkbox" name="aboutUs" id="aboutUs" value="yes" [checked]="selectedRoleValue.aboutUs == 'yes'">
+                <label class="roleLabel" for="aboutUs">About Us</label><br>
+              </div>
+              <div class="col-md-4">
+                <input (click)="productsChange()" type="checkbox" name="products" id="products" value="yes" [checked]="selectedRoleValue.products == 'yes'">
+                <label class="roleLabel" for="products">Products</label><br>
+              </div>
+            </div>
+            <div class="row form">
+              <div class="col-md-4">
+                <input (click)="locationChange()" type="checkbox" name="location" id="location" value="yes" [checked]="selectedRoleValue.location == 'yes'">
+                <label class="roleLabel" for="location">Location</label><br>
+              </div>
+              <div class="col-md-4">
+                <input (click)="appointmentChange()" type="checkbox" name="appointment" id="appointment" value="yes" [checked]="selectedRoleValue.appointment == 'yes'">
+                <label class="roleLabel" for="appointment">Appointment</label><br>
+              </div>
+              <div class="col-md-4">
+                <input (click)="testimonyChange()" type="checkbox"  name="testimony" id="testimony" value="yes" [checked]="selectedRoleValue.testimony == 'yes'">
+                <label class="roleLabel" for="testimony">Testimony</label><br>
+              </div>
+            </div>
+            <div class="row form">
+              <div class="col-md-4">
+                <input (click)="payMeChange()" type="checkbox" name="payMe" id="payMe" value="yes" [checked]="selectedRoleValue.payMe == 'yes'">
+                <label class="roleLabel" for="payMe">Payment Details</label><br>
+              </div>
+              <div class="col-md-4">
+                <input (click)="facebookChange()" type="checkbox" name="facebook" id="facebook" value="yes" [checked]="selectedRoleValue.facebook == 'yes'">
+                <label class="roleLabel" for="facebook">Facebook</label><br>
+              </div>
+              <div class="col-md-4">
+                <input (click)="instagramChange()" type="checkbox" name="instagram" id="instagram" value="yes" [checked]="selectedRoleValue.instagram == 'yes'">
+                <label class="roleLabel" for="instagram">Instagram</label><br>
+              </div>
+            </div>
+            <div class="row form">
+              <div class="col-md-4">
+                <input (click)="linkedinChange()" type="checkbox" name="linkedin" id="linkedin" value="yes" [checked]="selectedRoleValue.linkedin == 'yes'">
+                <label class="roleLabel" for="linkedin">LinkedIn</label><br>
+              </div>
+              <div class="col-md-4">
+                <input (click)="youtubeChange()" type="checkbox" name="youtube" id="youtube" value="yes" [checked]="selectedRoleValue.youtube == 'yes'">
+                <label class="roleLabel" for="youtube">Youtube</label><br>
+              </div>
+            </div>
+            <div class="row form">
+              <div class="update ml-auto mr-auto">
+                <button (click)="changeAddRole(false)" class="btn btn-primary btn-round">Cancel</button>
+              </div>
+              <div class="update ml-auto mr-auto">
+                <button (click)="save()" [disabled]="!selectedRoleValue.cardUserRole && addRole" class="btn btn-primary btn-round">Save</button>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="!selectedRole && !rolesEmpty && !addRole" class="text">
+            <h5>Select a Role</h5>
+          </div>
+
+          <div *ngIf="rolesEmpty" class="text">
+            <h5>Add a Role to Manage Roles</h5>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

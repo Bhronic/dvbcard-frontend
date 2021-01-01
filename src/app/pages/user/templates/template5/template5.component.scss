@@ -1,0 +1,44 @@
+#user{
+  width: 110mm !important;
+  border-radius: 0px;
+  background-image: linear-gradient(rgba(255,255,255,.3), rgba(255,255,255,.3)), url('../../../../../assets/images/background3.jpg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.card-icon{
+  margin-top: 20px;
+}
+
+.img-icon{
+  width: 30px;
+  height: auto;
+}
+
+.image img{
+  border-radius: 0px;
+}
+
+.avatar{
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+.invalid{
+  color: red !important;
+}
+
+input[type="color"] {
+  -webkit-appearance: none;
+  border: none;
+  border-radius: 50%;
+	width: 35px;
+  height: 35px;
+}
+input[type="color"]::-webkit-color-swatch-wrapper {
+	padding: 0;
+}
+input[type="color"]::-webkit-color-swatch {
+  border: none;
+	border-radius: 50%;
+}
